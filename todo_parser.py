@@ -3,8 +3,7 @@ import sys
 import os
 import uuid
 
-# TODOOOOOO: This is a self referencing TODO; Highest priority
-# FIXMEEE : Highest Priority Fix
+# TODOOOOOO: This is a self referencing item; Highest priority
 def parse_arguments(arr, argument, bool=False, verbose=False):
     for i, val in enumerate(arr):
         if val.replace("-", "") == argument:
@@ -24,7 +23,6 @@ def parse_arguments(arr, argument, bool=False, verbose=False):
     raise Exception("ArgumentNotFound")
 
 # TODOO: Another one
-# FIXME: Lowest Priority Fix
 def usage(exit_code):
     print(f"\nUsage: python {sys.argv[0]} -i <file_path> [OPTIONS]")
     print("\nOPTIONS:")
@@ -39,6 +37,7 @@ def usage(exit_code):
     if exit_code != None:
         sys.exit(exit_code)
 
+# FIXMEEE : Highest Priority Fix
 file_name          = ""
 comment_identifier = "//"
 keyword            = "TODO"
@@ -86,6 +85,8 @@ try:
 except Exception as e:
     pass
 
+# FIXME: Demo FixMe
+
 if not os.path.exists(file_name):
     print("Invalid File Path")
     sys.exit(1)
@@ -113,6 +114,16 @@ for line_number in range(len(lines)):
     if line_content.startswith(comment_identifier):
         keyword_content = line_content.removeprefix(comment_identifier).strip()
         if keyword_content.startswith(keyword):
+            for i in range(line_number+1,len(lines)):
+                nxt_line = lines[i].strip().strip("\t")
+                if nxt_line == "":
+                    continue
+                if nxt_line.startswith(comment_identifier):
+                    if nxt_line.removeprefix(comment_identifier).strip().startswith(keyword):
+                        break
+                    keyword_content = keyword_content + " " + nxt_line.removeprefix(comment_identifier).strip()
+                else:
+                    break
             keyword_content_arr.append((keyword_content,line_number+1))
 
 def count_priority(last_char,k):
@@ -141,6 +152,7 @@ sorted_res = dict(sorted(res.items(), key=lambda item: item[1],reverse=True))
 if not priority_mode:
     sorted_res = res
 
+# FIXMEE: Second priority fix
 for tup in sorted_res:
     content     = tup[0]
     line_number = tup[1]
@@ -148,7 +160,13 @@ for tup in sorted_res:
     todos_str = todos_str + f"Line: {line_number} -> {content}" + "\n"
 
 # TODOOO: Take file name as input
-# FIXMEE: Second priority fix
+# and save to that file name
+
+# TODO: Test todo
+
+# and this  
+# is a continuation
+
 if save_to_file:
     save_file_name = str(uuid.uuid4())[:7] + ".txt"
     with open(save_file_name,"w") as f:

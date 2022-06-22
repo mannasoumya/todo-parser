@@ -26,17 +26,19 @@ OPTIONS:
    -h : Print this help and exit
 
 $ python3 todo_parser.py -i todo_parser.py -c '#'
-Line: 6 -> TODOOOOOO: This is a self referencing TODO; Highest priority
-Line: 132 -> TODOOO: Take file name as input
+Line: 6 -> TODOOOOOO: This is a self referencing item; Highest priority
+Line: 162 -> TODOOO: Take file name as input and save to that file name
 Line: 25 -> TODOO: Another one
-Line: 45 -> TODO: another one
+Line: 48 -> TODO: another one
+Line: 165 -> TODO: Test todo and this is a continuation
 
 # With priority disabled (pass `-p` flag)
 $ python3 todo_parser.py -i todo_parser.py -c '#' -p
-Line: 6 -> TODOOOOOO: This is a self referencing TODO; Highest priority
+Line: 6 -> TODOOOOOO: This is a self referencing item; Highest priority
 Line: 25 -> TODOO: Another one
-Line: 45 -> TODO: another one
-Line: 132 -> TODOOO: Take file name as input
+Line: 48 -> TODO: another one
+Line: 162 -> TODOOO: Take file name as input and save to that file name
+Line: 165 -> TODO: Test todo and this is a continuation
 
 # With verbose mode (pass -v flag)
 $ python3 todo_parser.py -i todo_parser.py -c '#' -k 'FIXME' -v
@@ -46,7 +48,7 @@ Comment Identifier : #
 Priority Mode      : enabled
 Save To File       : disabled
 -------------------------------
-Line: 7 -> FIXMEEE : Highest Priority Fix
-Line: 151 -> FIXMEE: Second priority fix
-Line: 27 -> FIXME: Lowest Priority Fix
+Line: 40 -> FIXMEEE : Highest Priority Fix
+Line: 155 -> FIXMEE: Second priority fix
+Line: 88 -> FIXME: Demo FixMe
 ```
