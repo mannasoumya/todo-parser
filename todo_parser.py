@@ -30,8 +30,8 @@ def usage(exit_code):
     print("   -c (str)  : Comment Identifier (default: `//`)")
     print("   -k (str)  : Keyword to be parsed (default: `TODO`)")
     print("   -s (bool) : Save TODOs to file")
-    print("   -p (bool) : Enable/Disable priority mode (default: enabled)")
-    print("   -v (bool) : Verbose mode (default: disabled)")
+    print("   -p (bool) : Enable/Disable Priority Mode (default: enabled)")
+    print("   -v (bool) : Enable/Disable Verbose Mode (default: disabled)")
     print("   -h (bool) : Print this help and exit")
     print()
     if exit_code != None:
@@ -91,13 +91,14 @@ if not os.path.exists(file_name):
     print("Invalid File Path")
     sys.exit(1)
 
+dash_counter = 21 + len(file_name) + 1
 if verbose_mode:
-    print("-------------------------------")
+    print("-" * dash_counter)
     print(f"Keyword            : {keyword}")
     print(f"Comment Identifier : {comment_identifier}")
     print(f"Priority Mode      : {'enabled' if priority_mode else 'disabled'}")
     print(f"Save To File       : {'enabled' if save_to_file else 'disabled'}")
-    print("-------------------------------")
+    print("-" * dash_counter)
 
 file_content = ""
 with open(file_name) as f:
@@ -105,7 +106,16 @@ with open(file_name) as f:
 
 todos_str           = ""
 lines               = file_content.split("\n")
+non_blank_lines     = [line for line in lines if line.strip("\t").strip() != ""]
 keyword_content_arr = []
+
+if verbose_mode:
+    print(f"File               : {file_name}")
+    print(f"Total Lines        : {len(lines)}")
+    print(f"Total Blank Lines  : {len(lines) - len(non_blank_lines)}")
+    print("-" * dash_counter)
+    print()
+
 
 for line_number in range(len(lines)):
     line_content = lines[line_number].strip().strip("\t")
