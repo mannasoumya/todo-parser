@@ -26,13 +26,13 @@ def parse_arguments(arr, argument, bool=False, verbose=False):
 def usage(exit_code):
     print(f"\nUsage: python {sys.argv[0]} -i <file_path> [OPTIONS]")
     print("\nOPTIONS:")
-    print("   -i : Input file path")
-    print("   -c : Comment Identifier (default: `//`)")
-    print("   -k : Keyword to be parsed (default: `TODO`)")
-    print("   -s : Save TODOs to file")
-    print("   -p : Enable/Disable priority mode (default: enabled)")
-    print("   -v : Verbose mode (default: disabled)")
-    print("   -h : Print this help and exit")
+    print("   -i (str)  : Input file path")
+    print("   -c (str)  : Comment Identifier (default: `//`)")
+    print("   -k (str)  : Keyword to be parsed (default: `TODO`)")
+    print("   -s (bool) : Save TODOs to file")
+    print("   -p (bool) : Enable/Disable priority mode (default: enabled)")
+    print("   -v (bool) : Verbose mode (default: disabled)")
+    print("   -h (bool) : Print this help and exit")
     print()
     if exit_code != None:
         sys.exit(exit_code)
@@ -139,11 +139,11 @@ def count_priority(last_char,k):
 
 def check_priority(keyword_content_arr):
     global keyword
-    res = {}
+    res       = {}
     last_char = keyword[-1]
     for k in keyword_content_arr:
         priority = count_priority(last_char,k[0])
-        res[k] = priority
+        res[k]   = priority
     return res
 
 res        = check_priority(keyword_content_arr)

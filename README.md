@@ -1,7 +1,7 @@
 # todo-parser
 Simple TODO parser written in Python
 ### Priorities in TODOs
-The more number of ending characters in the **keyword** will have more priority and will be listed accordingly.
+The more number of ending characters in the **keyword**, the more priority.
 
 Consider following example sorted accordingly:
 - TODOOO: Highest priority 
@@ -14,16 +14,16 @@ Here, number of '**O**'s determine the priority of each item.
 ```console
 $ python3 todo_parser.py -h
 
-Usage: python ./todo_parser.py -i <file_path> [OPTIONS]
+Usage: python todo_parser.py -i <file_path> [OPTIONS]
 
 OPTIONS:
-   -i : Input file path
-   -c : Comment Identifier (default: `//`)
-   -k : Keyword to be parsed (default: `TODO`)
-   -s : Save TODOs to file
-   -p : Enable/Disable priority mode (default: enabled)
-   -v : Verbose mode (default: disabled)
-   -h : Print this help and exit
+   -i (str)  : Input file path
+   -c (str)  : Comment Identifier (default: `//`)
+   -k (str)  : Keyword to be parsed (default: `TODO`)
+   -s (bool) : Save TODOs to file
+   -p (bool) : Enable/Disable priority mode (default: enabled)
+   -v (bool) : Verbose mode (default: disabled)
+   -h (bool) : Print this help and exit
 
 $ python3 todo_parser.py -i todo_parser.py -c '#'
 Line: 6 -> TODOOOOOO: This is a self referencing item; Highest priority
