@@ -1,5 +1,6 @@
 import sys
 import os
+import uuid
 
 def parse_arguments(arr, argument, bool=False, verbose=False):
     for i, val in enumerate(arr):
@@ -25,6 +26,7 @@ def usage(exit_code):
     print("   -i : Input file path")
     print("   -c : Comment Identifier (default: `//`)")
     print("   -k : Keyword to be parsed (default: `TODO`)")
+    print("   -s : Save TODOs to file")
     print("   -h : Print this help and exit")
     print()
     if exit_code != None:
@@ -33,6 +35,7 @@ def usage(exit_code):
 file_name = ""
 comment_identifier = "//"
 keyword = "TODO"
+save_to_file = False
 
 try:
     if parse_arguments(sys.argv, 'h', True):
@@ -56,6 +59,11 @@ try:
 except Exception as e:
     pass
 
+try:
+    save_to_file = parse_arguments(sys.argv[1:],'s',True)
+except Exception as e:
+    pass
+
 if not os.path.exists(file_name):
     print("Invalid File Path")
     sys.exit(1)
@@ -64,6 +72,7 @@ file_content = ""
 with open(file_name) as f:
     file_content = f.read()
 
+todos_str = ""
 lines = file_content.split("\n")
 for line_number in range(len(lines)):
     line_content = lines[line_number].strip().strip("\t")
@@ -73,3 +82,11 @@ for line_number in range(len(lines)):
         keyword_content = line_content.removeprefix(comment_identifier).strip()
         if keyword_content.startswith(keyword):
             print(f"Line: {line_number+1} -> {keyword_content}")
+            todos_str = todos_str + f"Line: {line_number+1} -> {keyword_content}" + "\n"
+
+if save_to_file:
+    save_file_name = str(uuid.uuid4())[:7] + ".txt"
+    with open(save_file_name,"w") as f:
+        f.write(f"File: {file_name}\n")
+        f.write(todos_str)
+    print(f"\nWritten To `{save_file_name}`")
