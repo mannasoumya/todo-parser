@@ -2,10 +2,13 @@
 Simple TODO parser written in Python
 ### Priorities in TODOs
 The more number of ending characters in the **keyword** will have more priority and will be listed accordingly.
-For example, consider following example sorted accordingly  
+
+Consider following example sorted accordingly:
 - TODOOO: Highest priority 
 - TODOO: Less priority
 - TODO: Lowest priority
+
+Here, number of '**O**'s determine the priority of each item.
 ### Quick Start
 
 ```console
