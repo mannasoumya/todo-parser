@@ -49,8 +49,8 @@ Priority Mode      : enabled
 Save To File       : disabled
 ------------------------------------
 File               : todo_parser.py
-Total Lines        : 186
-Total Blank Lines  : 28
+Total Lines        : 185
+Total Blank Lines  : 27
 ------------------------------------
 
 Line: 40 -> FIXMEEE : Highest Priority Fix
