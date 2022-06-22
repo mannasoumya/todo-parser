@@ -1,7 +1,9 @@
+#!/usr/bin/python3
 import sys
 import os
 import uuid
 
+# TODO: This is a self referencing TODO
 def parse_arguments(arr, argument, bool=False, verbose=False):
     for i, val in enumerate(arr):
         if val.replace("-", "") == argument:
@@ -20,6 +22,7 @@ def parse_arguments(arr, argument, bool=False, verbose=False):
         print(f"ERROR: Argument '{argument}' not found")
     raise Exception("ArgumentNotFound")
 
+# TODO: Another one
 def usage(exit_code):
     print(f"\nUsage: python {sys.argv[0]} -i <file_path> [OPTIONS]")
     print("\nOPTIONS:")
@@ -32,10 +35,10 @@ def usage(exit_code):
     if exit_code != None:
         sys.exit(exit_code)
 
-file_name = ""
+file_name          = ""
 comment_identifier = "//"
-keyword = "TODO"
-save_to_file = False
+keyword            = "TODO"
+save_to_file       = False
 
 try:
     if parse_arguments(sys.argv, 'h', True):
@@ -84,6 +87,7 @@ for line_number in range(len(lines)):
             print(f"Line: {line_number+1} -> {keyword_content}")
             todos_str = todos_str + f"Line: {line_number+1} -> {keyword_content}" + "\n"
 
+# TODO: Take file name as input
 if save_to_file:
     save_file_name = str(uuid.uuid4())[:7] + ".txt"
     with open(save_file_name,"w") as f:
