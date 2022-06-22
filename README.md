@@ -22,6 +22,7 @@ OPTIONS:
    -k : Keyword to be parsed (default: `TODO`)
    -s : Save TODOs to file
    -p : Enable/Disable priority mode (default: enabled)
+   -v : Verbose mode (default: disabled)
    -h : Print this help and exit
 
 $ python3 todo_parser.py -i todo_parser.py -c '#'
@@ -36,4 +37,16 @@ Line: 6 -> TODOOOOOO: This is a self referencing TODO; Highest priority
 Line: 25 -> TODOO: Another one
 Line: 45 -> TODO: another one
 Line: 132 -> TODOOO: Take file name as input
+
+# With verbose mode (pass -v flag)
+$ python3 todo_parser.py -i todo_parser.py -c '#' -k 'FIXME' -v
+-------------------------------
+Keyword            : FIXME
+Comment Identifier : #
+Priority Mode      : enabled
+Save To File       : disabled
+-------------------------------
+Line: 7 -> FIXMEEE : Highest Priority Fix
+Line: 151 -> FIXMEE: Second priority fix
+Line: 27 -> FIXME: Lowest Priority Fix
 ```

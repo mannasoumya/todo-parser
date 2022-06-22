@@ -4,6 +4,7 @@ import os
 import uuid
 
 # TODOOOOOO: This is a self referencing TODO; Highest priority
+# FIXMEEE : Highest Priority Fix
 def parse_arguments(arr, argument, bool=False, verbose=False):
     for i, val in enumerate(arr):
         if val.replace("-", "") == argument:
@@ -23,6 +24,7 @@ def parse_arguments(arr, argument, bool=False, verbose=False):
     raise Exception("ArgumentNotFound")
 
 # TODOO: Another one
+# FIXME: Lowest Priority Fix
 def usage(exit_code):
     print(f"\nUsage: python {sys.argv[0]} -i <file_path> [OPTIONS]")
     print("\nOPTIONS:")
@@ -31,6 +33,7 @@ def usage(exit_code):
     print("   -k : Keyword to be parsed (default: `TODO`)")
     print("   -s : Save TODOs to file")
     print("   -p : Enable/Disable priority mode (default: enabled)")
+    print("   -v : Verbose mode (default: disabled)")
     print("   -h : Print this help and exit")
     print()
     if exit_code != None:
@@ -41,6 +44,7 @@ comment_identifier = "//"
 keyword            = "TODO"
 save_to_file       = False
 priority_mode      = True
+verbose_mode       = False
 
 # TODO: another one
 try:
@@ -52,6 +56,12 @@ except Exception as e:
 try:
     if parse_arguments(sys.argv, 'p', True):
         priority_mode = False
+except Exception as e:
+    pass
+
+try:
+    if parse_arguments(sys.argv, 'v', True):
+        verbose_mode = True
 except Exception as e:
     pass
 
@@ -80,12 +90,20 @@ if not os.path.exists(file_name):
     print("Invalid File Path")
     sys.exit(1)
 
+if verbose_mode:
+    print("-------------------------------")
+    print(f"Keyword            : {keyword}")
+    print(f"Comment Identifier : {comment_identifier}")
+    print(f"Priority Mode      : {'enabled' if priority_mode else 'disabled'}")
+    print(f"Save To File       : {'enabled' if save_to_file else 'disabled'}")
+    print("-------------------------------")
+
 file_content = ""
 with open(file_name) as f:
     file_content = f.read()
 
-todos_str = ""
-lines = file_content.split("\n")
+todos_str           = ""
+lines               = file_content.split("\n")
 keyword_content_arr = []
 
 for line_number in range(len(lines)):
@@ -100,7 +118,7 @@ for line_number in range(len(lines)):
 def count_priority(last_char,k):
     global keyword
     new_str = k.removeprefix(keyword[:-1])
-    count = 0
+    count   = 0
     for c in new_str:
         if c == last_char:
             count = count + 1
@@ -130,6 +148,7 @@ for tup in sorted_res:
     todos_str = todos_str + f"Line: {line_number} -> {content}" + "\n"
 
 # TODOOO: Take file name as input
+# FIXMEE: Second priority fix
 if save_to_file:
     save_file_name = str(uuid.uuid4())[:7] + ".txt"
     with open(save_file_name,"w") as f:
