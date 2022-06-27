@@ -1,10 +1,5 @@
 # todo-parser
 Simple TODO parser written in Python
-
-#### Auto Parsing Coomment Identifier
-Supported for the following languges:
-
-**Python, Bash, Java, C, C++, R, Perl, Elixir, Erlang, Javascript, Typescript, PHP, C#, Rust, Golang, Kotlin, Haskell**
 ### Priorities in TODOs
 The more number of ending characters in the **keyword**, the more priority.
 
@@ -14,6 +9,12 @@ Consider following example sorted accordingly:
 - TODO: Lowest priority
 
 Here, number of '**O**'s determine the priority of each item.
+
+### Auto Parsing Comment Identifier
+Supported for the following languges:
+
+**Python, Bash, Java, C, C++, R, Perl, Elixir, Erlang, Javascript, Typescript, PHP, C#, Rust, Golang, Kotlin, Haskell**
+
 ### Quick Start
 
 ```console
