@@ -3,6 +3,29 @@ import sys
 import os
 import uuid
 
+common_languages_comments = {
+    ".py"    : "#",
+    ".r"     : "#",
+    ".pl"    : "#",
+    ".ex"    : "#",
+    ".exs"   : "#",
+    ".sh"    : "#",
+    ".erl"   : "%",
+    ".java"  : "//",
+    ".c"     : "//",
+    ".cpp"   : "//",
+    ".js"    : "//",
+    ".ts"    : "//",
+    ".rs"    : "//",
+    ".php"   : "//",
+    ".cs"    : "//",
+    ".go"    : "//",
+    ".swift" : "//",
+    ".kt"    : "//",
+    ".kts"   : "//",
+    ".hs"    : "--",
+}
+
 # TODOOOOOO: This is a self referencing item; Highest priority
 def parse_arguments(arr, argument, bool=False, verbose=False):
     for i, val in enumerate(arr):
@@ -28,6 +51,7 @@ def usage(exit_code):
     print("\nOPTIONS:")
     print("   -i (str)  : Input file path")
     print("   -c (str)  : Comment Identifier (default: `//`)")
+    print("               (Auto-Comment-Identification Parser will be overridden if this flag is passed)")
     print("   -k (str)  : Keyword to be parsed (default: `TODO`)")
     print("   -s (bool) : Save TODOs to file")
     print("   -p (bool) : Enable/Disable Priority Mode (default: enabled)")
@@ -69,6 +93,16 @@ try:
 except Exception as e:
     print("ERROR: File path is required")
     usage(1)
+
+comment_identifier_found = False
+for ext in common_languages_comments:
+    if file_name.endswith(ext):
+        comment_identifier       = common_languages_comments[ext]
+        comment_identifier_found = True
+
+if verbose_mode:
+    if comment_identifier_found:
+        print(f"Auto found comment identifier for file `{file_name}` : {comment_identifier}")
 
 try:
     comment_identifier = parse_arguments(sys.argv[1:],'c')
