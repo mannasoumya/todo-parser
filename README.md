@@ -12,7 +12,7 @@ Consider following example sorted accordingly:
 Here, number of '**O**'s determine the priority of each item.
 
 ### Auto Parsing Comment Identifier
-Supported for the following languges:
+Supported for the following languages:
 
 **Python, Bash, Java, C, C++, R, Perl, Elixir, Erlang, Javascript, Typescript, PHP, C#, Rust, Golang, Kotlin, Haskell**
 
@@ -53,16 +53,19 @@ Line: 234 -> TODOOO: Take file name as input and save to that file name
 Line: 50 -> TODOO: Another one
 Line: 76 -> TODO: another one
 Line: 237 -> TODO: Test todo and this is a continuation
+```
 
-# With priority disabled (pass `-p` flag)
+### With priority disabled (pass `-p` flag)
+```console
 $ python3 todo_parser.py -i todo_parser.py -p
 Line: 31 -> TODOOOOOO: This is a self referencing item; Highest priority
 Line: 50 -> TODOO: Another one
 Line: 76 -> TODO: another one
 Line: 234 -> TODOOO: Take file name as input and save to that file name
 Line: 237 -> TODO: Test todo and this is a continuation
-
-# With verbose mode (pass -v flag)
+```
+### With verbose mode (pass -v flag)
+```console
 $ python3 todo_parser.py -i todo_parser.py -k 'FIXME' -v
 Auto found comment identifier for file `todo_parser.py` : #
 --------------------------------------
@@ -80,8 +83,9 @@ Total Blank Lines  : 36
 Line: 67 -> FIXMEEE : Highest Priority Fix
 Line: 218 -> FIXMEE: Second priority fix
 Line: 132 -> FIXME: Demo FixMe
-
-# Github Issue Reporting
+```
+### Github Issue Reporting (pass -gh flag)
+```console
 $ python3 todo_parser.py -i ./todo_parser.py -v -gh
 Auto found comment identifier for file `./todo_parser.py` : #
 ----------------------------------------
