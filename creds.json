@@ -1,0 +1,5 @@
+{
+    "user"       : <github-username>,
+    "repo"       : <github-repository>,
+    "auth_token" : <github-access-token>
+}
