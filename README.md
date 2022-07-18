@@ -64,7 +64,7 @@ Line: 76 -> TODO: another one
 Line: 234 -> TODOOO: Take file name as input and save to that file name
 Line: 237 -> TODO: Test todo and this is a continuation
 ```
-### With verbose mode (pass -v flag)
+### With verbose mode (pass ```-v``` flag)
 ```console
 $ python3 todo_parser.py -i todo_parser.py -k 'FIXME' -v
 Auto found comment identifier for file `todo_parser.py` : #
@@ -84,7 +84,7 @@ Line: 67 -> FIXMEEE : Highest Priority Fix
 Line: 218 -> FIXMEE: Second priority fix
 Line: 132 -> FIXME: Demo FixMe
 ```
-### Github Issue Reporting (pass -gh flag)
+### Github Issue Reporting (pass ```-gh``` flag)
 ```console
 $ python3 todo_parser.py -i ./todo_parser.py -v -gh
 Auto found comment identifier for file `./todo_parser.py` : #
