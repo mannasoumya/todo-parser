@@ -247,11 +247,14 @@ if save_to_file:
     print(f"\nWritten To `{save_file_name}`")
 
 if report_to_github:
+    print()
+    print("--------------------")
+    print("REPORTING TO GITHUB")
+    print("--------------------")
     if verbose_mode:
         cred_dct = parse_creds("creds.json")
         validate_creds_existence("creds.json",cred_dct)
         dashes = len(cred_dct["auth_token"])
-        print() 
         print("-"*(dashes+1))
         print(f"Github User : {cred_dct['user']}")
         print(f"Github Repo : {cred_dct['repo']}")

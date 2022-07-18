@@ -7,11 +7,20 @@ def parse_creds(path):
     if not os.path.exists(path):
         print(f"ERROR: path `{path}` not found")
         sys.exit(1)
-
-    with open(path,"r") as f:
-        json_content = json.load(f)
     
-    return json_content
+    try:
+        with open(path,"r") as f:
+            json_content = json.load(f)    
+    
+        return json_content
+    
+    except Exception as e:
+        print()
+        print(f"ERROR: Failed reading json `{path}`")
+        print(e)
+        print(e.args)
+        print()
+        sys.exit(1)
 
 def validate_creds_existence(cred_file_path,creds_dct):
     try:
