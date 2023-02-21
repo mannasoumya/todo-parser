@@ -31,18 +31,19 @@ common_languages_comments = {
 # TODOOOOOO: This is a self referencing item; Highest priority
 def parse_arguments(arr, argument, bool=False, verbose=False):
     for i, val in enumerate(arr):
-        if val.replace("-", "") == argument:
-            if bool:
+        if val.startswith('-') or val.startswith('--'):
+            if (val.removeprefix("-") == argument) or (val.removeprefix("--") == argument):
+                if bool:
+                    if verbose:
+                        print(f"{argument} : True")
+                    return True
+                if i+1 == len(arr):
+                    if verbose:
+                        print(f":ERROR: No Value Passed for Argument: `{argument}`")
+                    raise Exception("NoValueForArgument")
                 if verbose:
-                    print(f"{argument} : True")
-                return True
-            if i+1 == len(arr):
-                if verbose:
-                    print(f":ERROR: No Value Passed for Argument: `{argument}`")
-                raise Exception("NoValueForArgument")
-            if verbose:
-                print(f"{argument} : {arr[i+1]}")
-            return arr[i+1]
+                    print(f"{argument} : {arr[i+1]}")
+                return arr[i+1]
     if verbose:
         print(f"ERROR: Argument '{argument}' not found")
     raise Exception("ArgumentNotFound")
