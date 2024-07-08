@@ -151,6 +151,7 @@ with open(file_name) as f:
         file_content = f.read()
     except Exception as e:
         print(f"File: {file_name}\nERROR: {str(e)}\n")
+        sys.exit(1)
 
 
 todos_str           = ""
