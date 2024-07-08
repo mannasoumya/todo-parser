@@ -2,7 +2,6 @@
 import sys
 import os
 import uuid
-from github_api import gh_main_runner,parse_creds,validate_creds_existence
 
 common_languages_comments = {
     ".py"    : "#",
@@ -248,6 +247,7 @@ if save_to_file:
     print(f"\nWritten To `{save_file_name}`")
 
 if report_to_github:
+    from github_api import gh_main_runner,parse_creds,validate_creds_existence
     print()
     print("--------------------")
     print("REPORTING TO GITHUB")
