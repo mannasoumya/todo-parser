@@ -147,7 +147,11 @@ if verbose_mode:
 
 file_content = ""
 with open(file_name) as f:
-    file_content = f.read()
+    try:
+        file_content = f.read()
+    except Exception as e:
+        print(f"File: {file_name}\nERROR: {str(e)}\n")
+
 
 todos_str           = ""
 lines               = file_content.split("\n")
@@ -216,12 +220,16 @@ if not priority_mode:
     sorted_res = res
 
 # FIXMEE: Second priority fix
+
+if len(sorted_res) > 0:
+    print(f"File: {file_name}")
 for tup in sorted_res:
     content     = tup[0]
     line_number = tup[1]
     print(f"Line: {line_number} -> {content}")
     todos_str = todos_str + f"Line: {line_number} -> {content}" + "\n"
-
+if len(sorted_res) > 0:
+    print()
 
 def chop_keyword(line):
     global keyword
