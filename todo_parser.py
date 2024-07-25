@@ -59,19 +59,21 @@ def usage(exit_code):
     print("   -p  (bool) : Enable/Disable Priority Mode (default: enabled)")
     print("   -v  (bool) : Enable/Disable Verbose Mode (default: disabled)")
     print("   -gh (bool) : Report issues to Github (default: disabled)")
+    print("   -e  (bool) : Suppress Error Reporting (default: disabled)")
     print("   -h  (bool) : Print this help and exit")
     print()
     if exit_code != None:
         sys.exit(exit_code)
 
 # FIXMEEE : Highest Priority Fix
-file_name          = ""
-comment_identifier = "//"
-keyword            = "TODO"
-save_to_file       = False
-priority_mode      = True
-verbose_mode       = False
-report_to_github   = False
+file_name                = ""
+comment_identifier       = "//"
+keyword                  = "TODO"
+save_to_file             = False
+priority_mode            = True
+verbose_mode             = False
+report_to_github         = False
+suppress_error_reporting = False
 
 # TODO: another one
 try:
@@ -96,7 +98,7 @@ try:
     if parse_arguments(sys.argv, 'gh', True):
         report_to_github = True
 except Exception as e:
-    pass   
+    pass
 
 try:
     file_name = parse_arguments(sys.argv[1:],'i')
@@ -129,6 +131,11 @@ try:
 except Exception as e:
     pass
 
+try:
+    suppress_error_reporting = parse_arguments(sys.argv[1:],'e',True)
+except Exception as e:
+    pass
+
 # FIXME: Demo FixMe
 
 if not os.path.exists(file_name):
@@ -138,11 +145,12 @@ if not os.path.exists(file_name):
 dash_counter = 23 + len(file_name) + 1
 if verbose_mode:
     print("-" * dash_counter)
-    print(f"Keyword                 : {keyword}")
-    print(f"Comment Identifier      : {comment_identifier}")
-    print(f"Priority Mode           : {'enabled' if priority_mode else 'disabled'}")
-    print(f"Save To File            : {'enabled' if save_to_file else 'disabled'}")
-    print(f"Report Issues to Github : {'enabled' if report_to_github else 'disabled'}")
+    print(f"Keyword                  : {keyword}")
+    print(f"Comment Identifier       : {comment_identifier}")
+    print(f"Priority Mode            : {'enabled' if priority_mode else 'disabled'}")
+    print(f"Save To File             : {'enabled' if save_to_file else 'disabled'}")
+    print(f"Report Issues to Github  : {'enabled' if report_to_github else 'disabled'}")
+    print(f"Suppress Error Reporting : {'enabled' if suppress_error_reporting else 'disabled'}")
     print("-" * dash_counter)
 
 file_content = ""
@@ -150,7 +158,8 @@ with open(file_name) as f:
     try:
         file_content = f.read()
     except Exception as e:
-        print(f"File: {file_name}\nERROR: {str(e)}\n")
+        if not suppress_error_reporting:
+            print(f"File: {file_name}\nERROR: {str(e)}\n")
         sys.exit(1)
 
 
@@ -245,7 +254,7 @@ def chop_keyword(line):
 
 # TODO: Test todo
 
-# and this  
+# and this
 # is a continuation
 
 if save_to_file:
