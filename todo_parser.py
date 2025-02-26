@@ -2,8 +2,9 @@
 import sys
 import os
 import uuid
+from types import MappingProxyType
 
-common_languages_comments = {
+common_languages_comments = MappingProxyType({
     ".py"    : "#",
     ".r"     : "#",
     ".pl"    : "#",
@@ -25,7 +26,7 @@ common_languages_comments = {
     ".kts"   : "//",
     ".hs"    : "--",
     ".asm"   : ";"
-}
+})
 
 # TODOOOOOO: This is a self referencing item; Highest priority
 def parse_arguments(arr, argument, bool=False, verbose=False):
@@ -51,16 +52,17 @@ def parse_arguments(arr, argument, bool=False, verbose=False):
 def usage(exit_code):
     print(f"\nUsage: python {sys.argv[0]} -i <file_path> [OPTIONS]")
     print("\nOPTIONS:")
-    print("   -i  (str)  : Input file path")
-    print("   -c  (str)  : Comment Identifier (default: `//`)")
-    print("                (Auto-Comment-Identification Parser will be overridden if this flag is passed)")
-    print("   -k  (str)  : Keyword to be parsed (default: `TODO`)")
-    print("   -s  (bool) : Save TODOs to file")
-    print("   -p  (bool) : Enable/Disable Priority Mode (default: enabled)")
-    print("   -v  (bool) : Enable/Disable Verbose Mode (default: disabled)")
-    print("   -gh (bool) : Report issues to Github (default: disabled)")
-    print("   -e  (bool) : Suppress Error Reporting (default: disabled)")
-    print("   -h  (bool) : Print this help and exit")
+    print("   -i        (str)  : Input file path")
+    print("   -c        (str)  : Comment Identifier (default: `//`)")
+    print("                      (Auto-Comment-Identification Parser will be overridden if this flag is passed)")
+    print("   -k        (str)  : Keyword to be parsed (default: `TODO`)")
+    print("   -s        (bool) : Save TODOs to file")
+    print("   -p        (bool) : Enable/Disable Priority Mode (default: enabled)")
+    print("   -v        (bool) : Enable/Disable Verbose Mode (default: disabled)")
+    print("   -gh       (bool) : Report issues to Github (default: disabled)")
+    print("   -e        (bool) : Suppress Error Reporting (default: disabled)")
+    print("   -newlines (bool) : New Lines in TODOs (default: disabled)")
+    print("   -h        (bool) : Print this help and exit")
     print()
     if exit_code != None:
         sys.exit(exit_code)
@@ -74,6 +76,7 @@ priority_mode            = True
 verbose_mode             = False
 report_to_github         = False
 suppress_error_reporting = False
+new_lines_in_todo        = False
 
 # TODO: another one
 try:
@@ -136,6 +139,11 @@ try:
 except Exception as e:
     pass
 
+try:
+    new_lines_in_todo = parse_arguments(sys.argv[1:],'newlines',True)
+except Exception as e:
+    pass
+
 # FIXME: Demo FixMe
 
 if not os.path.exists(file_name):
@@ -151,6 +159,7 @@ if verbose_mode:
     print(f"Save To File             : {'enabled' if save_to_file else 'disabled'}")
     print(f"Report Issues to Github  : {'enabled' if report_to_github else 'disabled'}")
     print(f"Suppress Error Reporting : {'enabled' if suppress_error_reporting else 'disabled'}")
+    print(f"New Lines in TODOs       : {'enabled' if new_lines_in_todo else 'disabled'}")
     print("-" * dash_counter)
 
 file_content = ""
@@ -176,7 +185,7 @@ if verbose_mode:
     print("-" * dash_counter)
     print()
 
-
+todos_line_break = "\n" if new_lines_in_todo else " "
 for line_number in range(len(lines)):
     line_content = lines[line_number].strip().strip("\t")
     if line_content == "":
@@ -193,11 +202,11 @@ for line_number in range(len(lines)):
                     if nxt_line.removeprefix(comment_identifier).strip().startswith(keyword):
                         break
                     nxt_line_content = nxt_line.removeprefix(comment_identifier).strip()
-                    keyword_content = keyword_content + " " + nxt_line_content
+                    keyword_content = keyword_content + todos_line_break + nxt_line_content
                     if "body" not in todo_content_dct:
-                        todo_content_dct["body"] = nxt_line_content + " "
+                        todo_content_dct["body"] = nxt_line_content + todos_line_break
                     else:
-                        todo_content_dct["body"] = todo_content_dct["body"] + " " + nxt_line_content
+                        todo_content_dct["body"] = todo_content_dct["body"] + todos_line_break + nxt_line_content
                 else:
                     break
             todos_content.append(todo_content_dct)
