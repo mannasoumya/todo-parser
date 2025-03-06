@@ -117,7 +117,8 @@ for ext in common_languages_comments:
 
 if verbose_mode:
     if comment_identifier_found:
-        print(f"Auto found comment identifier for file `{file_name}` : {comment_identifier}")
+        comment_identifier_message = f"Auto found comment identifier for file `{file_name}` : {comment_identifier}"
+        print(comment_identifier_message)
 
 try:
     comment_identifier = parse_arguments(sys.argv[1:],'c')
@@ -150,7 +151,7 @@ if not os.path.exists(file_name):
     print("Invalid File Path")
     sys.exit(1)
 
-dash_counter = 23 + len(file_name) + 1
+dash_counter = len(comment_identifier_message) + 1 if verbose_mode else 23 + len(file_name) + 1
 if verbose_mode:
     print("-" * dash_counter)
     print(f"Keyword                  : {keyword}")
@@ -177,21 +178,18 @@ lines               = file_content.split("\n")
 non_blank_lines     = [line for line in lines if line.strip("\t").strip() != ""]
 keyword_content_arr = []
 todos_content       = []
-
-if verbose_mode:
-    print(f"File               : {file_name}")
-    print(f"Total Lines        : {len(lines)}")
-    print(f"Total Blank Lines  : {len(lines) - len(non_blank_lines)}")
-    print("-" * dash_counter)
-    print()
-
 todos_line_break = "\n" if new_lines_in_todo else " "
+
+commented_out_lines_count = 0
 for line_number in range(len(lines)):
     line_content = lines[line_number].strip().strip("\t")
     if line_content == "":
         continue
     if line_content.startswith(comment_identifier):
         keyword_content = line_content.removeprefix(comment_identifier).strip()
+        if len(keyword_content) == 0:
+            continue
+        commented_out_lines_count = commented_out_lines_count + 1
         todo_content_dct = {"title": keyword_content}
         if keyword_content.startswith(keyword):
             for i in range(line_number+1,len(lines)):
@@ -211,6 +209,15 @@ for line_number in range(len(lines)):
                     break
             todos_content.append(todo_content_dct)
             keyword_content_arr.append((keyword_content,line_number+1))
+
+if verbose_mode:
+    print(f"File                : {file_name}")
+    print(f"Total Lines         : {len(lines)}")
+    print(f"Total Blank Lines   : {len(lines) - len(non_blank_lines)}")
+    print(f"Total TODOs         : {len(todos_content)}")
+    print(f"Commented Out Lines : {commented_out_lines_count} (non-blank)")
+    print("-" * dash_counter)
+    print()
 
 def count_priority(last_char,k):
     global keyword
@@ -241,12 +248,24 @@ if not priority_mode:
 # FIXMEE: Second priority fix
 
 if len(sorted_res) > 0:
-    print(f"File: {file_name}")
+    file_name_message = f"File: {file_name}"
+    if new_lines_in_todo:
+        file_name_message = file_name_message + "\n" + "-" * len(file_name_message)
+        print(file_name_message)
+    else:
+        print(file_name_message)
+
 for tup in sorted_res:
-    content     = tup[0]
-    line_number = tup[1]
-    print(f"Line: {line_number} -> {content}")
-    todos_str = todos_str + f"Line: {line_number} -> {content}" + "\n"
+    content             = tup[0]
+    line_number         = tup[1]
+    line_number_message = f"Line: {line_number}"
+    line_number_dashes  = "-" * len(line_number_message)
+    if new_lines_in_todo:
+        line_print_msg = f"{line_number_dashes}\n{line_number_message}\n{line_number_dashes}\n{content}\n"
+    else:
+        line_print_msg = f"{line_number_message} -> {content}"
+    print(line_print_msg)
+    todos_str = todos_str + line_print_msg + "\n"
 if len(sorted_res) > 0:
     print()
 
