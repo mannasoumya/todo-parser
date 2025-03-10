@@ -5,7 +5,7 @@ Report **TODOS** as **ISSUES** in Github.
 The more number of ending characters in the **keyword**, the more priority.
 
 Consider following example sorted accordingly:
-- TODOOO: Highest priority 
+- TODOOO: Highest priority
 - TODOO: Less priority
 - TODO: Lowest priority
 
@@ -34,18 +34,21 @@ Guide on creating your own **Access Token**: [link](https://docs.github.com/en/a
 ```console
 $ python3 todo_parser.py -h
 
-Usage: python ./todo_parser.py -i <file_path> [OPTIONS]
+Usage: python todo_parser.py -i <file_path> [OPTIONS]
 
 OPTIONS:
-   -i  (str)  : Input file path
-   -c  (str)  : Comment Identifier (default: `//`)
-                (Auto-Comment-Identification Parser will be overridden if this flag is passed)
-   -k  (str)  : Keyword to be parsed (default: `TODO`)
-   -s  (bool) : Save TODOs to file
-   -p  (bool) : Enable/Disable Priority Mode (default: enabled)
-   -v  (bool) : Enable/Disable Verbose Mode (default: disabled)
-   -gh (bool) : Report issues to Github (default: disabled)
-   -h  (bool) : Print this help and exit
+   -i        (str)  : Input file path
+   -c        (str)  : Comment Identifier (default: `//`)
+                      (Auto-Comment-Identification Parser will be overridden if this flag is passed)
+   -k        (str)  : Keyword to be parsed (default: `TODO`)
+   -s        (bool) : Save TODOs to file (default: disabled)
+   -s        (bool) : Save TODOs to file (default: disabled)
+   -p        (bool) : Enable/Disable Priority Mode (default: enabled)
+   -v        (bool) : Enable/Disable Verbose Mode (default: disabled)
+   -gh       (bool) : Report issues to Github (default: disabled)
+   -e        (bool) : Suppress Error Reporting (default: disabled)
+   -newlines (bool) : New Lines in TODOs (default: disabled)
+   -h        (bool) : Print this help and exit
 
 $ python3 todo_parser.py -i todo_parser.py
 Line: 31 -> TODOOOOOO: This is a self referencing item; Highest priority
@@ -115,28 +118,28 @@ Github Repo : test-gh-api
 -----------------------------------------
 ----------------------------
 Title : `This is a self referencing item; Highest priority`
-Body  :  
+Body  :
 ----------------------------
 Do you want to report this todo ? (y/n/q)  n
 Not reporting this issue....
 
 ----------------------------
 Title : `Another one`
-Body  :  
+Body  :
 ----------------------------
 Do you want to report this todo ? (y/n/q)  n
 Not reporting this issue....
 
 ----------------------------
 Title : `another one`
-Body  :  
+Body  :
 ----------------------------
 Do you want to report this todo ? (y/n/q)  n
 Not reporting this issue....
 
 ----------------------------
 Title : `Take file name as input`
-Body  :  and save to that file name 
+Body  :  and save to that file name
 ----------------------------
 Do you want to report this todo ? (y/n/q)  y
 Issue 9: `Take file name as input` created successfully
