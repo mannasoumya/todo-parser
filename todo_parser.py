@@ -56,7 +56,7 @@ def usage(exit_code):
     print("   -c        (str)  : Comment Identifier (default: `//`)")
     print("                      (Auto-Comment-Identification Parser will be overridden if this flag is passed)")
     print("   -k        (str)  : Keyword to be parsed (default: `TODO`)")
-    print("   -s        (bool) : Save TODOs to file")
+    print("   -s        (bool) : Save TODOs to file (default: disabled)")
     print("   -p        (bool) : Enable/Disable Priority Mode (default: enabled)")
     print("   -v        (bool) : Enable/Disable Verbose Mode (default: disabled)")
     print("   -gh       (bool) : Report issues to Github (default: disabled)")
@@ -178,7 +178,7 @@ lines               = file_content.split("\n")
 non_blank_lines     = [line for line in lines if line.strip("\t").strip() != ""]
 keyword_content_arr = []
 todos_content       = []
-todos_line_break = "\n" if new_lines_in_todo else " "
+todos_line_break    = "\n" if new_lines_in_todo else " "
 
 commented_out_lines_count = 0
 for line_number in range(len(lines)):
