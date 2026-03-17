@@ -62,6 +62,7 @@ def usage(exit_code):
     print("   -gh       (bool) : Report issues to Github (default: disabled)")
     print("   -e        (bool) : Suppress Error Reporting (default: disabled)")
     print("   -newlines (bool) : New Lines in TODOs (default: disabled)")
+    print("   -search   (str)  : Search Text (default: None)")
     print("   -h        (bool) : Print this help and exit")
     print()
     if exit_code != None:
@@ -77,6 +78,7 @@ verbose_mode             = False
 report_to_github         = False
 suppress_error_reporting = False
 new_lines_in_todo        = False
+search_text              = ""
 
 # TODO: another one
 try:
@@ -145,6 +147,11 @@ try:
 except Exception as e:
     pass
 
+try:
+    search_text = parse_arguments(sys.argv[1:],'search')
+except Exception as e:
+    pass
+
 # FIXME: Demo FixMe
 
 if not os.path.exists(file_name):
@@ -161,6 +168,7 @@ if verbose_mode:
     print(f"Report Issues to Github  : {'enabled' if report_to_github else 'disabled'}")
     print(f"Suppress Error Reporting : {'enabled' if suppress_error_reporting else 'disabled'}")
     print(f"New Lines in TODOs       : {'enabled' if new_lines_in_todo else 'disabled'}")
+    print(f"Search Text              : {search_text if search_text != '' else 'None'}")
     print("-" * dash_counter)
 
 file_content = ""
@@ -242,6 +250,9 @@ def check_priority(keyword_content_arr):
 res        = check_priority(keyword_content_arr)
 sorted_res = dict(sorted(res.items(), key=lambda item: item[1],reverse=True))
 
+if search_text != "":
+    sorted_res = {k:v for k,v in sorted_res.items() if search_text in k[0].lower()}
+
 if not priority_mode:
     sorted_res = res
 
@@ -284,6 +295,10 @@ def chop_keyword(line):
 
 # and this
 # is a continuation
+
+if search_text != "" and len(sorted_res) == 0:
+    print(f"No TODOs found containing the search text `{search_text}`")
+    exit(0)
 
 if save_to_file:
     save_file_name = str(uuid.uuid4())[:7] + ".txt"
