@@ -42,12 +42,12 @@ OPTIONS:
                       (Auto-Comment-Identification Parser will be overridden if this flag is passed)
    -k        (str)  : Keyword to be parsed (default: `TODO`)
    -s        (bool) : Save TODOs to file (default: disabled)
-   -s        (bool) : Save TODOs to file (default: disabled)
    -p        (bool) : Enable/Disable Priority Mode (default: enabled)
    -v        (bool) : Enable/Disable Verbose Mode (default: disabled)
    -gh       (bool) : Report issues to Github (default: disabled)
    -e        (bool) : Suppress Error Reporting (default: disabled)
    -newlines (bool) : New Lines in TODOs (default: disabled)
+   -search   (str)  : Search Text (default: None)
    -h        (bool) : Print this help and exit
 
 $ python3 todo_parser.py -i todo_parser.py
