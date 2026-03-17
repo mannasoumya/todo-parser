@@ -247,14 +247,20 @@ def check_priority(keyword_content_arr):
         res[k]   = priority
     return res
 
+def search_content_in_todo(whole_text, search_text):
+    text_splitter = whole_text.split(":")
+    assert len(text_splitter) > 1, "Invalid TODO Format, Expected `KEYWORD: content`"
+    todo_content = text_splitter[1].strip()
+    return search_text.lower() in todo_content.lower()
+
 res        = check_priority(keyword_content_arr)
 sorted_res = dict(sorted(res.items(), key=lambda item: item[1],reverse=True))
 
-if search_text != "":
-    sorted_res = {k:v for k,v in sorted_res.items() if search_text in k[0].lower()}
-
 if not priority_mode:
     sorted_res = res
+
+if search_text != "":
+    sorted_res = {k:v for k,v in sorted_res.items() if search_content_in_todo(k[0], search_text)}
 
 # FIXMEE: Second priority fix
 
